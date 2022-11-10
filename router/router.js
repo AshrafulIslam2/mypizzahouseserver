@@ -59,12 +59,12 @@ async function run() {
     console.log(error);
   }
   try {
-    const database = client.db("mypizzastore").collection("reviews");
+    const reviewdata = client.db("mypizzastore").collection("reviews");
     //Add New reviews
     router.post("/reviews", async (req, res) => {
       const reviews = req.body;
       console.log(reviews);
-      const result = database.insertOne(reviews);
+      const result = reviewdata.insertOne(reviews);
       res.send(result);
     });
   } catch (error) {
