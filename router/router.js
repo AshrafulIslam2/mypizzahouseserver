@@ -102,6 +102,15 @@ async function run() {
       res.send(review);
     });
   } catch (error) {}
+  try {
+    const reviewdatabase = client.db("mypizzastore").collection("reviews");
+    router.delete("/reviews/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const deletedreview = await reviewdatabase.deleteOne(query);
+      res.send(deletedreview);
+    });
+  } catch (error) {}
 }
 run().catch(console.dir);
 
