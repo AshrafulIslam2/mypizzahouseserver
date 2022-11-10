@@ -49,9 +49,22 @@ async function run() {
   try {
     const database = client.db("mypizzastore").collection("pizzadetails");
     //Add New signal service
-    router.put("/services", async (req, res) => {
+    router.post("/services", async (req, res) => {
       const newservice = req.body;
+      console.log(newservice);
       const result = database.insertOne(newservice);
+      res.send(result);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    const database = client.db("mypizzastore").collection("reviews");
+    //Add New reviews
+    router.post("/reviews", async (req, res) => {
+      const reviews = req.body;
+      console.log(reviews);
+      const result = database.insertOne(reviews);
       res.send(result);
     });
   } catch (error) {
