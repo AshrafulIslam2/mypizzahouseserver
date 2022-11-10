@@ -98,16 +98,17 @@ async function run() {
       if (req.query.service) {
         query = { service: req.query.service };
       }
-      const review = await reviewdatabase.findOne(query);
+      const cursor = reviewdatabase.find(query);
+      const review = await cursor.toArray();
       res.send(review);
     });
   } catch (error) {}
   try {
-    const reviewdatabase = client.db("mypizzastore").collection("reviews");
+    const reviewdata = client.db("mypizzastore").collection("reviews");
     router.delete("/reviews/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
-      const deletedreview = await reviewdatabase.deleteOne(query);
+      const deletedreview = await reviewdata.deleteOne(query);
       res.send(deletedreview);
     });
   } catch (error) {}
