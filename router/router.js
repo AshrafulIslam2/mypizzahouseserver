@@ -22,6 +22,7 @@ async function run() {
   } catch (error) {
     console.log(error);
   }
+
   try {
     const database = client.db("mypizzastore").collection("pizzadetails");
     //find all service
@@ -34,6 +35,7 @@ async function run() {
   } catch (error) {
     console.log(error);
   }
+
   try {
     const database = client.db("mypizzastore").collection("pizzadetails");
     //find signal service
@@ -46,6 +48,7 @@ async function run() {
   } catch (error) {
     console.log(error);
   }
+
   try {
     const database = client.db("mypizzastore").collection("pizzadetails");
     //Add New signal service
@@ -58,6 +61,7 @@ async function run() {
   } catch (error) {
     console.log(error);
   }
+
   try {
     const reviewdata = client.db("mypizzastore").collection("reviews");
     //Add New reviews
@@ -70,6 +74,7 @@ async function run() {
   } catch (error) {
     console.log(error);
   }
+
   try {
     const reviewdata = client.db("mypizzastore").collection("reviews");
     //Display Review in User Field
@@ -85,18 +90,18 @@ async function run() {
   } catch (error) {
     console.log(error);
   }
+
   try {
-    const reviewdata = client.db("mypizzastore").collection("reviews");
-    //display review on service area according to service
-    router.post("/reviews", async (req, res) => {
-      const reviews = req.body;
-      console.log(reviews);
-      const result = reviewdata.insertOne(reviews);
-      res.send(result);
+    const reviewdatabase = client.db("mypizzastore").collection("reviews");
+    router.get("/reviews/single", async (req, res) => {
+      let query = {};
+      if (req.query.service) {
+        query = { service: req.query.service };
+      }
+      const review = await reviewdatabase.findOne(query);
+      res.send(review);
     });
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 }
 run().catch(console.dir);
 
