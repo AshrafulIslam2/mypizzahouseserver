@@ -70,6 +70,33 @@ async function run() {
   } catch (error) {
     console.log(error);
   }
+  try {
+    const reviewdata = client.db("mypizzastore").collection("reviews");
+    //Display Review in User Field
+    router.get("/reviews", async (req, res) => {
+      let query = {};
+      if (req.query.email) {
+        query = { email: req.query.email };
+      }
+      const cursor = reviewdata.find(query);
+      const review = await cursor.toArray();
+      res.send(review);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    const reviewdata = client.db("mypizzastore").collection("reviews");
+    //display review on service area according to service
+    router.post("/reviews", async (req, res) => {
+      const reviews = req.body;
+      console.log(reviews);
+      const result = reviewdata.insertOne(reviews);
+      res.send(result);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }
 run().catch(console.dir);
 
