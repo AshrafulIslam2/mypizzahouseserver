@@ -108,9 +108,7 @@ async function run() {
     const reviewdatabase = client.db("mypizzastore").collection("reviews");
     router.patch("/reviews/:id", async (req, res) => {
       const id = req.params.id;
-      console.log(id);
       const { rating, review } = req.body;
-      console.log(rating, review);
       const query = { _id: ObjectId(id) };
       const updatedoc = {
         $set: {
