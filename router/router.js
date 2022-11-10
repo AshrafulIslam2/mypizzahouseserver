@@ -90,7 +90,7 @@ async function run() {
   } catch (error) {
     console.log(error);
   }
-
+  //Get data by Service name
   try {
     const reviewdatabase = client.db("mypizzastore").collection("reviews");
     router.get("/reviews/single", async (req, res) => {
@@ -103,6 +103,27 @@ async function run() {
       res.send(review);
     });
   } catch (error) {}
+  // update review
+  try {
+    const reviewdatabase = client.db("mypizzastore").collection("reviews");
+    router.patch("/reviews/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      const { rating, review } = req.body;
+      console.log(rating, review);
+      const query = { _id: ObjectId(id) };
+      const updatedoc = {
+        $set: {
+          rating: rating,
+          review: review,
+        },
+      };
+      const result = await reviewdatabase.updateOne(query, updatedoc);
+      res.send(result);
+    });
+  } catch (error) {}
+
+  //delte data
   try {
     const reviewdata = client.db("mypizzastore").collection("reviews");
     router.delete("/reviews/:id", async (req, res) => {
